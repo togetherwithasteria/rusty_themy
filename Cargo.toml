@@ -2,7 +2,13 @@
 name = "rusty_themy"
 version = "0.1.0"
 edition = "2021"
-
+authors = ["Natalia Asteria <fortressnordlys@outlook.com>"]
+description = "🦀🦀 Obtain the current color theme in your system! 🎨🎨"
+readme = "README.md"
+repository = "https://github.com/natalia-asteria/rusty_themy"
+license = "MIT OR Apache-2.0"
+keywords = ["ui", "theming", "gtk"]
+categories = ["gui", "graphics"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
@@ -12,3 +18,4 @@ dark-light = { version = "1.0.0", optional = true }
 
 [features]
 gtk = ["lightningcss", "cssparser", "dark-light"]
+default = ["gtk"]
