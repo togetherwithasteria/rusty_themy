@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::path::Path;
 use std::path::PathBuf;
 
 use cssparser::Color;
@@ -60,7 +59,7 @@ fn push(theme: &PathBuf, themes: &mut HashMap<String, Color>, errors: &mut Vec<E
     }
 }
 
-pub fn get_theme_on_folder(
+fn get_theme_on_folder(
     path: &PathBuf,
     themes: &mut HashMap<String, Color>,
     errors: &mut Vec<Error>,
@@ -82,9 +81,6 @@ pub fn get_theme_on_folder(
     }
 }
 
-pub fn get_theme_on_path(path: &PathBuf) -> Result<Vec<DefineColor>, Error> {
-    from_file(path).map_err(|err| Error::ParsingError(err))
-}
 #[derive(Debug)]
 pub enum Error {
     ParsingError(super::parse::Error),
