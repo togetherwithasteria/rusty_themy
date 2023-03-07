@@ -8,9 +8,9 @@ use super::parse::{from_file, DefineColor};
 
 #[cfg(all(unix, not(target_os = "macos")))]
 /**
- * Get the current
+ * Get the current color variables applied by GTK
  *
- * Currently
+ * Currently only supports Freedesktop platforms.
  */
 pub fn current() -> (HashMap<String, Color>, Vec<Error>) {
     use std::env;
