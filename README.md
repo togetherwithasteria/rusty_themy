@@ -1,7 +1,7 @@
 <div align="center">
 
 # 🦀🦀 Rusty Themy 🎨🎨
-*Obtain the current GTK color theme in Linux!*
+*Obtain the current color theme in your system!*
 
 </div>
 
@@ -57,6 +57,7 @@ Are you confused on what color to consume? Good place to start would be to visit
 
 ## Getting color themes on other platforms
 Unfortunately, they are not supported yet.
+But feel free to make a PR!
 ## 📜 License
 
 Licensed under either of
