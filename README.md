@@ -5,6 +5,10 @@
 
 </div>
 
+```sh
+$ cargo add rusty_themy
+```
+
 ## 📜 License
 
 Licensed under either of

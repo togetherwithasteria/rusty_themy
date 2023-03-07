@@ -14,7 +14,11 @@ use lightningcss::values::ident::Ident;
 use lightningcss::visit_types;
 use lightningcss::visitor::{Visit, VisitTypes, Visitor};
 
-use crate::Error;
+#[derive(Debug)]
+pub enum Error {
+    IoError(std::io::Error),
+    ParserError(String),
+}
 
 pub fn from_file<P: AsRef<Path>>(path: P) -> Result<Vec<DefineColor>, Error> {
     let mut local_config = File::open(path).map_err(|e| Error::IoError(e))?;
@@ -82,16 +86,19 @@ impl<'i> AtRuleParser<'i> for ColorParser {
         _: &ParserOptions<'_, 'i>,
     ) -> Result<Self::Prelude, ParseError<'i, Self::Error>> {
         match_ignore_ascii_case! { &name,
-                    "" => {
+                    "define-color" => {
 
         let mut ident = None;
         let mut color = None;
-        for count in 1..2 {
+        for count in 1..3 {
+            println!("Hiii2");
           if let Ok(_) = input_parser.try_parse(|input| {
              if count == 1 {
+                println!("Hiii3");
                 ident = Some(input.expect_ident_cloned());
             } else if count == 2 {
                 color = Some(cssparser::Color::parse(input));
+                println!("Hiii4");
             };
 
             Result::<(), ()>::Ok(())
@@ -120,6 +127,7 @@ impl<'i> AtRuleParser<'i> for ColorParser {
         start: &ParserState,
         _: &ParserOptions<'_, 'i>,
     ) -> Result<Self::AtRule, ()> {
+        println!("Hiiii");
         match prelude {
             Prelude::DefineColor(ident, color) => Ok(AtRule::DefineColor(DefineColor {
                 ident: ident.to_string(),
@@ -148,6 +156,7 @@ impl<'a, 'i> Visitor<'i, AtRule> for DefineColorCollector<'i> {
     const TYPES: VisitTypes = visit_types!(RULES);
 
     fn visit_rule(&mut self, rule: &mut CssRule<'i, AtRule>) -> Result<(), Self::Error> {
+        println!("Hiii");
         if let CssRule::Custom(AtRule::DefineColor(color)) = rule {
             self.colors.push(color.clone());
         }
@@ -174,13 +183,44 @@ impl ToCss for AtRule {
 }
 #[cfg(test)]
 pub mod test {
-    use crate::parse::DefineColor;
+    use cssparser::{Color, SourceLocation, RGBA};
+
+    use super::DefineColor;
 
     use super::from_str;
     #[test]
     pub fn test() {
-        let vec: Vec<DefineColor> = vec![];
-   
-        assert_eq!(from_str(include_str!("gtk.css")).unwrap(), vec);
+        let css = from_str(include_str!("gtk.css")).unwrap();
+
+        assert_eq!(
+            *css.first().unwrap(),
+            DefineColor {
+                ident: "accent_color".to_string(),
+                color: Color::RGBA(RGBA {
+                    red: 233,
+                    green: 70,
+                    blue: 134,
+                    alpha: 255,
+                }),
+                loc: SourceLocation { line: 2, column: 1 },
+            },
+        );
+
+        assert_eq!(
+            *css.last().unwrap(),
+            DefineColor {
+                ident: "cute_fg".to_string(),
+                color: Color::RGBA(RGBA {
+                    red: 191,
+                    green: 16,
+                    blue: 76,
+                    alpha: 255,
+                }),
+                loc: SourceLocation {
+                    line: 80,
+                    column: 1,
+                },
+            },
+        )
     }
 }
