@@ -48,7 +48,7 @@ The output will be a JSON dump of the colors that I hope, get applied by GTK for
         ),
         ...
     },
-    [],
+    [ /* any errors go here */ ],
 )
 ```
 Custom colors that are defined by you will also be included! Not just the ones from GTK or Libadwaita.
