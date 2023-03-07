@@ -56,8 +56,8 @@ Custom colors that are defined by you will also be included! Not just the ones f
 Are you confused on what color to consume? Good place to start would be to visit the [Libadwaita docs on Named Colors](https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.2/named-colors.html) or play with the [Gradience](https://github.com/GradienceTeam/Gradience) app!
 
 ## Getting color themes on other platforms
-Unfortunately, they are not supported yet.
-But feel free to make a PR!
+Unfortunately, they are not supported yet.<br/>
+But... feel free to make a PR!
 ## 📜 License
 
 Licensed under either of
